@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    210381,       4351]
-NotebookOptionsPosition[    206301,       4255]
-NotebookOutlinePosition[    206644,       4270]
-CellTagsIndexPosition[    206601,       4267]
+NotebookDataLength[    212471,       4391]
+NotebookOptionsPosition[    208391,       4295]
+NotebookOutlinePosition[    208734,       4310]
+CellTagsIndexPosition[    208691,       4307]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -2019,34 +2019,43 @@ Cell[BoxData[
   RowBox[{
    RowBox[{
     RowBox[{
-     RowBox[{"endEffectorPositionToString", "[", 
-      RowBox[{"x_", ",", "y_", ",", "z_", ",", "alpha_"}], "]"}], ":=", 
-     RowBox[{"\"\<(x, y, z) = \>\"", "<>", 
-      RowBox[{"ToString", "[", 
-       RowBox[{
-        RowBox[{"{", 
-         RowBox[{"x", ",", "y", ",", "z"}], "}"}], ",", "InputForm"}], "]"}], 
-      "<>", "\"\< R\\nrho = \>\"", "<>", 
+     RowBox[{
+     "endEffectorPositionToString", "[", "endEffectorPosition_", "]"}], ":=", 
+     RowBox[{"\"\<rho = \>\"", "<>", 
       RowBox[{"ToString", "[", 
        RowBox[{
         RowBox[{"Sqrt", "[", 
          RowBox[{"Total", "[", 
           RowBox[{
-           RowBox[{"{", 
-            RowBox[{"x", ",", "y", ",", "z"}], "}"}], "^", "2"}], "]"}], 
-         "]"}], ",", "InputForm"}], "]"}], "<>", "\"\< R\\nalpha = \>\"", "<>", 
+           RowBox[{"endEffectorPosition", "[", 
+            RowBox[{"[", 
+             RowBox[{"1", ";;", "3"}], "]"}], "]"}], "^", "2"}], "]"}], "]"}],
+         ",", "InputForm"}], "]"}], "<>", "\"\< R\\nalpha = \>\"", "<>", 
       RowBox[{"ToString", "[", 
-       RowBox[{"alpha", ",", "InputForm"}], "]"}], "<>", 
-      "\"\< deg\\n\>\""}]}], ";"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"endEffectorPosition", "[", 
+         RowBox[{"[", "4", "]"}], "]"}], ",", "InputForm"}], "]"}]}]}], ";"}],
+    "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"solutionToString", "[", "solution_", "]"}], ":=", 
+     RowBox[{"\"\<solution:\\n\>\"", "<>", 
+      RowBox[{"ToString", "[", 
+       RowBox[{
+        RowBox[{"solution", "//", "Transpose"}], "//", "Reverse"}], "]"}]}]}],
+     ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"solutionErrorToString", "[", "err_", "]"}], ":=", 
      RowBox[{"\"\<log10(error) = \>\"", "<>", 
       RowBox[{"ToString", "[", 
        RowBox[{
-        RowBox[{"Log", "[", 
-         RowBox[{"10", ",", "err"}], "]"}], ",", "InputForm"}], "]"}]}]}], 
-    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"Round", "[", 
+         RowBox[{
+          RowBox[{"Log", "[", 
+           RowBox[{"10", ",", "err"}], "]"}], ",", "0.001"}], "]"}], ",", 
+        "InputForm"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{
     "\:0418\:043d\:0442\:0435\:0440\:0430\:043a\:0442\:0438\:0432\:043d\:0430\
@@ -2058,10 +2067,6 @@ Cell[BoxData[
    RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
     RowBox[{
      RowBox[{
-      RowBox[{"robotVisualizationEndEffectorPositionString", "=", 
-       RowBox[{"endEffectorPositionToString", "[", 
-        RowBox[{"x", ",", "y", ",", "z", ",", "alpha"}], "]"}]}], ";", 
-      "\[IndentingNewLine]", "\[IndentingNewLine]", 
       RowBox[{"Block", "[", 
        RowBox[{
         RowBox[{"{", 
@@ -2080,57 +2085,74 @@ Cell[BoxData[
         RowBox[{"Block", "[", 
          RowBox[{
           RowBox[{"{", 
-           RowBox[{"jCoords", "=", 
+           RowBox[{"solution", "=", 
             RowBox[{
-             RowBox[{
-             "endEffectorPosition", "//", "kinematicsEquationsSolver"}], "//",
-              "jointsCoordinates"}]}], "}"}], ",", "\[IndentingNewLine]", 
-          RowBox[{
-           RowBox[{"inverseKinematicsSolutionErrorString", "=", 
-            RowBox[{"solutionErrorToString", "[", 
-             RowBox[{"vecNorm", "[", 
-              RowBox[{"MapThread", "[", 
-               RowBox[{"distance", ",", 
-                RowBox[{"{", 
-                 RowBox[{
-                  RowBox[{"jCoords", "[", 
-                   RowBox[{"[", "5", "]"}], "]"}], ",", 
-                  RowBox[{
-                   RowBox[{
-                   "endEffectorPoints", "/.", "robotParametersValues"}], "/.", 
-                   RowBox[{
-                   "robotEndEffectorPosition", "[", "endEffectorPosition", 
-                    "]"}]}]}], "}"}]}], "]"}], "]"}], "]"}]}], ";", 
-           "\[IndentingNewLine]", 
-           RowBox[{"(*", "\:0413\:0440\:0430\:0444\:0438\:043a\:0430", "*)"}],
+            "endEffectorPosition", "//", "kinematicsEquationsSolver"}]}], 
+           "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Block", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"jCoords", "=", 
+              RowBox[{"solution", "//", "jointsCoordinates"}]}], "}"}], ",", 
             "\[IndentingNewLine]", 
-           RowBox[{"robotVisualization", "=", 
-            RowBox[{"Show", "[", 
+            RowBox[{
+             RowBox[{"robotVisualizationEndEffectorPositionString", "=", 
+              RowBox[{
+              "endEffectorPositionToString", "[", "endEffectorPosition", 
+               "]"}]}], ";", "\[IndentingNewLine]", 
+             RowBox[{"inverseKinematicsSolutionString", "=", 
+              RowBox[{"solutionToString", "[", "solution", "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"inverseKinematicsSolutionErrorString", "=", 
+              RowBox[{"solutionErrorToString", "[", 
+               RowBox[{"vecNorm", "[", 
+                RowBox[{"MapThread", "[", 
+                 RowBox[{"distance", ",", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"Last", "[", "jCoords", "]"}], ",", 
+                    RowBox[{
+                    RowBox[{
+                    "endEffectorPoints", "/.", "robotParametersValues"}], "/.", 
+                    RowBox[{
+                    "robotEndEffectorPosition", "[", "endEffectorPosition", 
+                    "]"}]}]}], "}"}]}], "]"}], "]"}], "]"}]}], ";", 
+             "\[IndentingNewLine]", 
              RowBox[{
-              RowBox[{"Join", "[", 
+             "(*", "\:0413\:0440\:0430\:0444\:0438\:043a\:0430", "*)"}], 
+             "\[IndentingNewLine]", 
+             RowBox[{"robotVisualization", "=", 
+              RowBox[{"Show", "[", 
                RowBox[{
-                RowBox[{"robotOrientationGraphics", "[", "]"}], ",", 
-                RowBox[{"robotBodyVisualizationGraphics", "[", "]"}], ",", 
-                RowBox[{"robotMechanismVisualizationGraphics", "[", 
-                 RowBox[{"endEffectorPosition", ",", "jCoords"}], "]"}]}], 
-               "]"}], ",", "\[IndentingNewLine]", 
-              RowBox[{"SphericalRegion", "\[Rule]", "True"}], ",", 
-              RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
-              RowBox[{"BoxRatios", "->", "Automatic"}], ",", 
-              RowBox[{"Axes", "\[Rule]", "True"}], ",", 
-              RowBox[{"AxesLabel", "\[Rule]", 
-               RowBox[{"{", 
-                RowBox[{"\"\<x\>\"", ",", "\"\<y\>\"", ",", "\"\<z\>\""}], 
-                "}"}]}], ",", 
-              RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "]"}]}], ";"}]}], 
-         "\[IndentingNewLine]", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
-      "\[IndentingNewLine]", 
+                RowBox[{"Join", "[", 
+                 RowBox[{
+                  RowBox[{"robotOrientationGraphics", "[", "]"}], ",", 
+                  RowBox[{"robotBodyVisualizationGraphics", "[", "]"}], ",", 
+                  RowBox[{"robotMechanismVisualizationGraphics", "[", 
+                   RowBox[{"endEffectorPosition", ",", "jCoords"}], "]"}]}], 
+                 "]"}], ",", "\[IndentingNewLine]", 
+                RowBox[{"SphericalRegion", "\[Rule]", "True"}], ",", 
+                RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+                RowBox[{"BoxRatios", "->", "Automatic"}], ",", 
+                RowBox[{"Axes", "\[Rule]", "True"}], ",", 
+                RowBox[{"AxesLabel", "\[Rule]", 
+                 RowBox[{"{", 
+                  RowBox[{"\"\<x\>\"", ",", "\"\<y\>\"", ",", "\"\<z\>\""}], 
+                  "}"}]}], ",", 
+                RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "]"}]}], ";"}]}],
+            "\[IndentingNewLine]", "]"}]}], "]"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
       RowBox[{"(*", "\:0412\:044b\:0432\:043e\:0434", "*)"}], 
       "\[IndentingNewLine]", 
       RowBox[{
       "robotVisualizationEndEffectorPositionString", "<>", "\"\<\\n\>\"", "<>",
-        "inverseKinematicsSolutionErrorString"}]}], ",", 
-     "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", "\"\<-----------------------------\>\"", "<>", 
+       "\"\<\\n\>\"", "<>", "\[IndentingNewLine]", 
+       "inverseKinematicsSolutionString", "<>", "\"\<\\n\>\"", "<>", 
+       "\[IndentingNewLine]", "\"\<-----------------------------\>\"", "<>", 
+       "\"\<\\n\>\"", "<>", "\[IndentingNewLine]", 
+       "inverseKinematicsSolutionErrorString"}]}], ",", "\[IndentingNewLine]",
+      "\[IndentingNewLine]", 
      RowBox[{"(*", 
       RowBox[{
       "\:041d\:0430\:0441\:0442\:0440\:043e\:0439\:043a\:0438", " ", 
@@ -2220,7 +2242,14 @@ Cell[BoxData[
    3.7077275267397585`*^9}, {3.70772761567525*^9, 3.707727650691462*^9}, {
    3.7077442658753014`*^9, 3.707744269405957*^9}, 3.7077464272875757`*^9, {
    3.7077629294104185`*^9, 3.7077629910347395`*^9}, {3.7077633383666234`*^9, 
-   3.707763338930524*^9}},ExpressionUUID->"5ef41018-fa48-401a-b3bd-\
+   3.707763338930524*^9}, {3.707801725173665*^9, 3.707801779308878*^9}, 
+   3.707801809418279*^9, {3.7078019058037906`*^9, 3.7078019125948105`*^9}, {
+   3.707801975169403*^9, 3.7078019760431905`*^9}, {3.707802059966177*^9, 
+   3.7078022829926558`*^9}, {3.707802341636896*^9, 3.7078023509705706`*^9}, {
+   3.707802443687709*^9, 3.7078025747549076`*^9}, {3.7078026195783887`*^9, 
+   3.7078026272855053`*^9}, {3.707802665442833*^9, 3.707802667864293*^9}, {
+   3.707802760746978*^9, 
+   3.707802812404254*^9}},ExpressionUUID->"5ef41018-fa48-401a-b3bd-\
 598ab7445c4d"],
 
 Cell[BoxData[
@@ -2234,7 +2263,7 @@ Cell[BoxData[
       Hold[$CellContext`x$$], 0}, {
       Hold[$CellContext`y$$], 0}, {
       Hold[$CellContext`z$$], 0}, {
-      Hold[$CellContext`alpha$$], 0}}, Typeset`size$$ = {242., {79., 12.}}, 
+      Hold[$CellContext`alpha$$], 0}}, Typeset`size$$ = {638., {174., 12.}}, 
     Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
     DynamicBox[Manipulate`ManipulateBoxes[
      1, StandardForm, 
@@ -2246,40 +2275,47 @@ Cell[BoxData[
         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
         Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
          Typeset`skipInitDone$$}, 
-      "Body" :> ($CellContext`robotVisualizationEndEffectorPositionString = \
-$CellContext`endEffectorPositionToString[$CellContext`x$$, $CellContext`y$$, \
-$CellContext`z$$, $CellContext`alpha$$]; 
-       Block[{$CellContext`endEffectorPosition = Join[
+      "Body" :> (Block[{$CellContext`endEffectorPosition = Join[
             
             ReplaceAll[{$CellContext`x$$, $CellContext`y$$, $CellContext`z$$} \
 $CellContext`sphereRadius, $CellContext`robotParametersValues], \
 {$CellContext`alpha$$} (Pi/180)]}, 
-         Block[{$CellContext`jCoords = $CellContext`jointsCoordinates[
-             $CellContext`kinematicsEquationsSolver[$CellContext`\
-endEffectorPosition]]}, $CellContext`inverseKinematicsSolutionErrorString = \
+         Block[{$CellContext`solution = \
+$CellContext`kinematicsEquationsSolver[$CellContext`endEffectorPosition]}, 
+          
+          Block[{$CellContext`jCoords = \
+$CellContext`jointsCoordinates[$CellContext`solution]}, \
+$CellContext`robotVisualizationEndEffectorPositionString = \
+$CellContext`endEffectorPositionToString[$CellContext`endEffectorPosition]; \
+$CellContext`inverseKinematicsSolutionString = \
+$CellContext`solutionToString[$CellContext`solution]; \
+$CellContext`inverseKinematicsSolutionErrorString = \
 $CellContext`solutionErrorToString[
-             $CellContext`vecNorm[
-              MapThread[$CellContext`distance, {
-                Part[$CellContext`jCoords, 5], 
-                ReplaceAll[
-                 
-                 ReplaceAll[$CellContext`endEffectorPoints, \
+              $CellContext`vecNorm[
+               MapThread[$CellContext`distance, {
+                 Last[$CellContext`jCoords], 
+                 ReplaceAll[
+                  
+                  ReplaceAll[$CellContext`endEffectorPoints, \
 $CellContext`robotParametersValues], 
-                 $CellContext`robotEndEffectorPosition[$CellContext`\
+                  $CellContext`robotEndEffectorPosition[$CellContext`\
 endEffectorPosition]]}]]]; $CellContext`robotVisualization = Show[
-             Join[
-              $CellContext`robotOrientationGraphics[], 
-              $CellContext`robotBodyVisualizationGraphics[], 
-              $CellContext`robotMechanismVisualizationGraphics[$CellContext`\
+              Join[
+               $CellContext`robotOrientationGraphics[], 
+               $CellContext`robotBodyVisualizationGraphics[], 
+               $CellContext`robotMechanismVisualizationGraphics[$CellContext`\
 endEffectorPosition, $CellContext`jCoords]], SphericalRegion -> True, 
-             PlotRange -> All, BoxRatios -> Automatic, Axes -> True, 
-             AxesLabel -> {"x", "y", "z"}, ImageSize -> Large]; Null]]; 
+              PlotRange -> All, BoxRatios -> Automatic, Axes -> True, 
+              AxesLabel -> {"x", "y", "z"}, ImageSize -> Large]; Null]]]; 
        StringJoin[$CellContext`robotVisualizationEndEffectorPositionString, 
+         "\n", "-----------------------------", 
+         "\n", $CellContext`inverseKinematicsSolutionString, "\n", 
+         "-----------------------------", 
          "\n", $CellContext`inverseKinematicsSolutionErrorString]), 
       "Specifications" :> {{$CellContext`x$$, 0}, {$CellContext`y$$, 
          0}, {$CellContext`z$$, 0}, {$CellContext`alpha$$, 0}}, 
       "Options" :> {ControlType -> InputField}, "DefaultOptions" :> {}],
-     ImageSizeCache->{293., {118., 124.}},
+     ImageSizeCache->{689., {165., 171.}},
      SingleEvaluation->True],
     Deinitialization:>None,
     DynamicModuleValues:>{},
@@ -2291,8 +2327,13 @@ endEffectorPosition, $CellContext`jCoords]], SphericalRegion -> True,
    StripOnInput->False],
   Manipulate`InterpretManipulate[1]]], "Output",
  CellChangeTimes->{
-  3.7077633569926825`*^9},ExpressionUUID->"ff66bc1b-b63e-4bfb-9e7a-\
-1aa98ab1b3a7"]
+  3.7077633569926825`*^9, {3.70780210055089*^9, 3.707802117988006*^9}, {
+   3.7078022081922226`*^9, 3.7078022782906003`*^9}, 3.707802351961934*^9, {
+   3.7078024608540306`*^9, 3.707802481701203*^9}, {3.707802554953035*^9, 
+   3.707802577640792*^9}, {3.7078026280729785`*^9, 3.7078026361703405`*^9}, 
+   3.7078026686227503`*^9, {3.7078027633175216`*^9, 
+   3.70780281365242*^9}},ExpressionUUID->"c5e3170b-e9b2-4a6f-94f8-\
+33a72add323a"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -2367,7 +2408,7 @@ Cell[BoxData[
 
 Cell[BoxData[
  DynamicBox[ToBoxes[$CellContext`robotVisualization, StandardForm],
-  ImageSizeCache->{576., {294., 299.}}]], "Output",
+  ImageSizeCache->{576., {285., 291.}}]], "Output",
  CellChangeTimes->{3.7077464478742723`*^9, 3.707763281985038*^9, 
   3.707763359506633*^9},ExpressionUUID->"42747c94-aa6d-4631-991d-\
 2e74060d7c0b"]
@@ -3287,8 +3328,7 @@ Cell[BoxData[
         RowBox[{"Sqrt", "[", 
          RowBox[{"1", "+", 
           RowBox[{"GoldenRatio", "^", "2"}]}], "]"}]}], ")"}], "*", 
-      "icosahedronCoordinates"}]}], ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
+      "icosahedronCoordinates"}]}], ";"}], "\[IndentingNewLine]", "\n", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{
@@ -3343,8 +3383,8 @@ Cell[BoxData[
         RowBox[{
          RowBox[{"rotateByQ", "[", 
           RowBox[{"#", ",", "icosaTetraQuat"}], "]"}], "&"}], ",", 
-        "icosahedronCoordinates"}], "]"}]}], ";"}], "*)"}], "\n", 
-   "\[IndentingNewLine]", 
+        "icosahedronCoordinates"}], "]"}]}], ";"}], "*)"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{
     "\:0412\:0438\:0437\:0443\:0430\:043b\:0438\:0437\:0430\:0446\:0438\:044f\
@@ -4254,7 +4294,7 @@ S4oAEwjfc51k80T+3z0OjP93j/sXM9Py0g==
 }, Open  ]]
 },
 WindowSize->{858, 977},
-WindowMargins->{{Automatic, 133}, {0, Automatic}},
+WindowMargins->{{Automatic, -7}, {-7, Automatic}},
 FrontEndVersion->"11.1 for Microsoft Windows (64-bit) (March 13, 2017)",
 StyleDefinitions->"Default.nb"
 ]
@@ -4328,29 +4368,29 @@ Cell[67479, 1609, 506, 8, 30, "Output", "ExpressionUUID" -> \
 Cell[68000, 1620, 17485, 378, 943, "Input", "ExpressionUUID" -> \
 "971f3f7d-30f0-4020-8aa0-63f74d4e01e3"],
 Cell[CellGroupData[{
-Cell[85510, 2002, 11448, 221, 696, "Input", "ExpressionUUID" -> \
+Cell[85510, 2002, 12896, 250, 791, "Input", "ExpressionUUID" -> \
 "5ef41018-fa48-401a-b3bd-598ab7445c4d"],
-Cell[96961, 2225, 3550, 69, 259, "Output", "ExpressionUUID" -> \
-"ff66bc1b-b63e-4bfb-9e7a-1aa98ab1b3a7"]
+Cell[98409, 2254, 4196, 81, 353, "Output", "ExpressionUUID" -> \
+"c5e3170b-e9b2-4a6f-94f8-33a72add323a"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[100548, 2299, 4540, 66, 50, "Input", "ExpressionUUID" -> \
+Cell[102642, 2340, 4540, 66, 50, "Input", "ExpressionUUID" -> \
 "c151a086-ea1f-4e99-85a8-872e52b85fd1"],
-Cell[105091, 2367, 281, 5, 641, "Output", "ExpressionUUID" -> \
+Cell[107185, 2408, 281, 5, 591, "Output", "ExpressionUUID" -> \
 "42747c94-aa6d-4631-991d-2e74060d7c0b"]
 }, Open  ]],
-Cell[105387, 2375, 425, 10, 30, "Input", "ExpressionUUID" -> \
+Cell[107481, 2416, 425, 10, 30, "Input", "ExpressionUUID" -> \
 "165ece68-c2b9-443d-b289-93a8b7ebec20"],
 Cell[CellGroupData[{
-Cell[105837, 2389, 6661, 146, 411, "Input", "ExpressionUUID" -> \
+Cell[107931, 2430, 6661, 146, 411, "Input", "ExpressionUUID" -> \
 "9644c2f3-2134-4062-a58f-e1a899572aba"],
-Cell[112501, 2537, 35960, 619, 591, "Output", "ExpressionUUID" -> \
+Cell[114595, 2578, 35960, 619, 591, "Output", "ExpressionUUID" -> \
 "c73f890e-ae5a-4ce5-bf68-eab1fe2820ad"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[148498, 3161, 11104, 262, 601, "Input", "ExpressionUUID" -> \
+Cell[150592, 3202, 11100, 261, 601, "Input", "ExpressionUUID" -> \
 "f4dfdc22-5ba3-446a-9328-27ed5cf3f692"],
-Cell[159605, 3425, 46680, 827, 591, "Output", "ExpressionUUID" -> \
+Cell[161695, 3465, 46680, 827, 591, "Output", "ExpressionUUID" -> \
 "6f063e15-89c1-403e-b0e0-3be4648c2ed6"]
 }, Open  ]]
 }
